@@ -7,7 +7,6 @@ RUN echo "===> Installing dependencies..." \
     && apk add --no-cache -t .build-deps \
     make \
     cmake \
-    clang \
     g++ \
     linux-headers \
     openssl-dev \
@@ -17,13 +16,17 @@ RUN echo "===> Installing dependencies..." \
 RUN echo "===> Cloning broker..." \
     && git clone --single-branch --branch "$BROKER_VERSION" --recurse-submodules https://github.com/zeek/broker.git /tmp/broker
 
-RUN echo "===> Building broker..." \
+RUN echo "===> Building & installing broker..." \
     && cd /tmp/broker \
-    && CC=/usr/bin/clang CXX=/usr/bin/clang++ ./configure --enable-debug --enable-static --disable-docs \
+    && ./configure --disable-docs \
     && make \
+    && make test \
     && make install
 
+RUN echo "===> Removing broker sources..." \
+    && rm -rf /tmp/broker
+
 RUN echo "===> Removing build-dependencies..." \
-    && apk del .build-deps
+    && apk del --purge .build-deps
 
 CMD "bash"
