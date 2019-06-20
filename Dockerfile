@@ -1,5 +1,7 @@
 FROM alpine:3.9
 
+LABEL Maintainer="{haas,wilkens}@informatik.uni-hamburg.de"
+
 ENV BROKER_VERSION v1.1.2
 
 RUN echo "===> Installing dependencies..." \
