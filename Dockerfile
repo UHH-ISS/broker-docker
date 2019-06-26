@@ -5,7 +5,7 @@ LABEL Maintainer="{haas,wilkens}@informatik.uni-hamburg.de"
 ENV BROKER_VERSION v1.1.2
 
 RUN echo "===> Installing dependencies..." \
-    && apk add --no-cache bash ca-certificates python3 openssl \
+    && apk add --no-cache bash ca-certificates libstdc++ python3 openssl \
     && apk add --no-cache -t .build-deps \
     make \
     cmake \
