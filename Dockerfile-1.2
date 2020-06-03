@@ -6,7 +6,7 @@ RUN echo "===> Installing build dependencies..." \
     linux-headers openssl-dev python3-dev \
     git
 
-ARG BROKER_VERSION=v1.3.1
+ARG BROKER_VERSION=v1.2.7
 
 RUN echo "===> Cloning broker..." \
     && git clone --single-branch --branch "$BROKER_VERSION" --recurse-submodules https://github.com/zeek/broker.git /tmp/broker
@@ -19,7 +19,7 @@ RUN echo "===> Building & installing broker..." \
     && make install
 
 
-FROM alpine:3.10
+FROM alpine:3.11
 
 LABEL Maintainer="{haas,wilkens}@informatik.uni-hamburg.de"
 
@@ -27,7 +27,7 @@ RUN echo "===> Installing runtime dependencies..." \
     && apk add --no-cache bash ca-certificates libstdc++ python3 openssl
 
 # Copy libraries from builder
-COPY --from=builder /usr/local/lib64/* /usr/local/lib64/
+COPY --from=builder /usr/local/lib/* /usr/local/lib/
 # Copy headers from builder
 COPY --from=builder /usr/local/include/* /usr/local/include/
 # Copy python bindings from builder
