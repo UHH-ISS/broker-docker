@@ -4,7 +4,8 @@ __push__="$1"
 
 # Pull alpine to get newest security updates
 docker pull alpine:3.10
-docker pull alpine:3.11
+#docker pull alpine:3.11
+#docker pull alpine:3.12
 
 # Build tags for version 1.2.x
 for TAG in $(cat tags-1.2.txt); do
